@@ -5,3 +5,4 @@ try:
     from . import matplot_dep
 except (ImportError, NameError):
     print('Fail to load GPy.plotting.matplot_dep.')
+    raise

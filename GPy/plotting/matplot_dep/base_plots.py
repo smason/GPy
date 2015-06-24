@@ -3,7 +3,7 @@
 
 
 try:
-    import Tango
+    from . import Tango
     import pylab as pb
 except:
     pass

@@ -2,12 +2,12 @@
 # Licensed under the BSD 3-clause license (see LICENSE.txt)
 
 try:
-    import Tango
+    from . import Tango
     import pylab as pb
 except:
     pass
 import numpy as np
-from base_plots import gpplot, x_frame1D, x_frame2D
+from .base_plots import gpplot, x_frame1D, x_frame2D
 from ...models.gp_coregionalized_regression import GPCoregionalizedRegression
 from ...models.sparse_gp_coregionalized_regression import SparseGPCoregionalizedRegression
 from scipy import sparse
