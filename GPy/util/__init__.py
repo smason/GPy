@@ -16,7 +16,7 @@ import diag
 import initialization
 import multioutput
 import linalg_gpu
-import parallel
+# import parallel
 
 try:
     import sympy
