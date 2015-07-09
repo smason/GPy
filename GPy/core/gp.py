@@ -339,7 +339,7 @@ class GP(Model):
         levels=20, samples=0, fignum=None, ax=None, resolution=None,
         plot_raw=True,
         linecol=None,fillcol=None, Y_metadata=None, data_symbol='kx',
-        apply_link=False):
+        apply_link=False, cmap=None):
         """
         Plot the GP's view of the world, where the data is normalized and before applying a likelihood.
         This is a call to plot with plot_raw=True.
@@ -386,6 +386,8 @@ class GP(Model):
             kw['linecol'] = linecol
         if fillcol is not None:
             kw['fillcol'] = fillcol
+        if cmap is not None:
+            kw['cmap'] = cmap
         return models_plots.plot_fit(self, plot_limits, which_data_rows,
                                      which_data_ycols, fixed_inputs,
                                      levels, samples, fignum, ax, resolution,
@@ -396,7 +398,8 @@ class GP(Model):
         which_data_ycols='all', fixed_inputs=[],
         levels=20, samples=0, fignum=None, ax=None, resolution=None,
         plot_raw=False,
-        linecol=None,fillcol=None, Y_metadata=None, data_symbol='kx', predict_kw=None):
+        linecol=None,fillcol=None, Y_metadata=None, data_symbol='kx', predict_kw=None,
+        cmap=None):
         """
         Plot the posterior of the GP.
           - In one dimension, the function is plotted with a shaded region identifying two standard deviations.
@@ -441,6 +444,8 @@ class GP(Model):
             kw['linecol'] = linecol
         if fillcol is not None:
             kw['fillcol'] = fillcol
+        if cmap is not None:
+            kw['cmap'] = cmap
         return models_plots.plot_fit(self, plot_limits, which_data_rows,
                                      which_data_ycols, fixed_inputs,
                                      levels, samples, fignum, ax, resolution,

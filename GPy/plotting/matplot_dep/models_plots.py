@@ -18,7 +18,7 @@ def plot_fit(model, plot_limits=None, which_data_rows='all',
         levels=20, samples=0, fignum=None, ax=None, resolution=None,
         plot_raw=False,
         linecol=Tango.colorsHex['darkBlue'],fillcol=Tango.colorsHex['lightBlue'], Y_metadata=None, data_symbol='kx',
-        apply_link=False, samples_f=0, plot_uncertain_inputs=True, predict_kw=None):
+        apply_link=False, samples_f=0, plot_uncertain_inputs=True, predict_kw=None, cmap=None):
     """
     Plot the posterior of the GP.
       - In one dimension, the function is plotted with a shaded region identifying two standard deviations.
@@ -180,6 +180,9 @@ def plot_fit(model, plot_limits=None, which_data_rows='all',
             Xgrid[:,i] = v
         x, y = np.linspace(xmin[0], xmax[0], resolution), np.linspace(xmin[1], xmax[1], resolution)
 
+        if cmap is None:
+            cmap = pb.cm.jet
+
         #predict on the frame and plot
         if plot_raw:
             m, _ = model._raw_predict(Xgrid, **predict_kw)
@@ -191,8 +194,12 @@ def plot_fit(model, plot_limits=None, which_data_rows='all',
             m, v = model.predict(Xgrid, full_cov=False, Y_metadata=meta, **predict_kw)
         for d in which_data_ycols:
             m_d = m[:,d].reshape(resolution, resolution).T
-            plots['contour'] = ax.contour(x, y, m_d, levels, vmin=m.min(), vmax=m.max(), cmap=pb.cm.jet)
-            if not plot_raw: plots['dataplot'] = ax.scatter(X[which_data_rows, free_dims[0]], X[which_data_rows, free_dims[1]], 40, Y[which_data_rows, d], cmap=pb.cm.jet, vmin=m.min(), vmax=m.max(), linewidth=0.)
+            plots['contour'] = ax.contour(x, y, m_d, levels, vmin=m.min(), vmax=m.max(), cmap=cmap)
+            if not plot_raw:
+                plots['dataplot'] = ax.scatter(X[which_data_rows, free_dims[0]],
+                                               X[which_data_rows, free_dims[1]], 40,
+                                               Y[which_data_rows, d], cmap=cmap,
+                                               vmin=m.min(), vmax=m.max(), linewidth=0.)
 
         #set the limits of the plot to some sensible values
         ax.set_xlim(xmin[0], xmax[0])
